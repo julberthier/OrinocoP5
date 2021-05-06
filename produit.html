@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style_pp.css" />
+    
+        <!-- FONT AWESOME -->
+
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <title></title>
+  </head>
+  <body>
+    <!-- LOGO HEADER -->
+    <header>
+      <a href="index.html"><img src="images/logo.png" class="img_header" /></a>
+    </header>
+
+    <!-- Container principal-->  
+        
+
+      <div id="container_central"> 
+         
+        <div class="container_img glassmorphism" id="produit_central"> 
+          <div id="container_produit">
+            <a href="index.html" id="back_button_link"><i class="fas fa-chevron-circle-left"></i></a> 
+
+            <img src="images/teddy_1.jpg" alt="" id="img_produit" class="box_shadow"> 
+ 
+            <div id="background_card" class="box_shadow"> 
+                <div class="list_items"> 
+                    <span class="price_list_items bold_items">Teddy</span> 
+                    <span class="price_list_items italic_items"><i class="fas fa-tags"></i> 19,99 €</span> 
+<span> 
+           <label for="quantité">Quantité : </label> 
+           <select name="quantité" id="qt"> 
+             <option value="1">1</option> 
+             <option value="2">2</option> 
+             <option value="3">3</option> 
+             <option value="4">4</option> 
+             <option value="5">5</option> 
+             <option value="6">6</option> 
+             <option value="7">7</option> 
+             <option value="8">8</option> 
+             <option value="9">9</option> 
+           </select>      
+</span>     
+ 
+ 
+ 
+        <input type="checkbox" id="add_to_cart" name="Buy"> 
+        <label for="add_to_cart" class=""> 
+            <button id="shop_button"> 
+                <i class="fas fa-cart-plus"></i> Ajouter au panier 
+            </button> 
+        </label> 
+                </div> 
+            </div> 
+          </div>
+        </div> 
+ 
+     
+
+      <!--- Fenetre d'affichage panier -->
+
+      <div id="addedtocart" class="bg_linear_g" hidden>
+        <button id="close"><i class="fas fa-times"></i></button>
+        <span id="added_tit">Votre produit a bien été ajouté au panier</span>
+
+        <div id="container_button_cart">
+          <div id="main_box_fenetre">
+            <div id="main_fenetre_info"></div>
+          </div>
+          <div id="button_line">
+            <button id="button_keep">Continuer mes achats</button>
+            <button id="button_cart">Voir mon panier</button>
+          </div>
+          <div id="img_container_fenetre">
+            <div id="see_more">
+              Nous vous recommandons aussi
+              <div id="img_more"></div>
+            </div>
+          </div>
+        </div>     
+      </div>
+      <!-- Fin fenetre panier -->
+    </div>
+    
+  </div>
+
+    <!-- Footer de la page -->
+
+    <footer>
+      <div>
+        <span><i class="far fa-copyright"></i> Orinico 2021 </span>        
+      </div>
+    </footer>
+
+    <!-- FIN DU FOOTER -->
+
+    <!-- SCRIPTS JAVASCRIPT -->
+
+    <script src="produit.js"></script>   
+  </body>
+</html>
