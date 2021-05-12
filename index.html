@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style_pp.css" />
 
     <!-- FONT AWESOME -->
 
@@ -31,20 +32,17 @@
     <!-- BOUTON PANIER -->
 
     <div id="drop_card">
+      <div id="red_o"></div>
       <a href="panier.html"><i class="fas fa-shopping-cart glassmorphism"></i></a>
       <div class="dropdown">
-        <div class="dd_cart box_shadow" id="cart">
-          <p><span id="in-cart-items-num">0</span> Articles</p>
-          <div id="dd_cart_content"></div>
+        <div class="dd_cart box_shadow" id="cart">          
+          <div id="dd_cart_content">
+            <span id="dd_items_list" style="display: none;"><img src="images/teddy_1.jpg" alt="" id="small_dd_img"><span>1 x</span><span>Norbert</span><span>29,00 €</span></span>
+          </div>
         </div>       
-      </div>     
+      </div>    
 
-      <ul id="cart-dropdown" hidden>
-        <li id="empty-cart-msg"><a href="">Votre panier est vide</a></li>
-        <li class="go-to-cart hidden" >
-          <a href="panier.html">Voir le panier</a>
-        </li>
-      </ul>
+      
     </div>
 
     <div id="blur_bg"></div>
@@ -71,8 +69,8 @@
           
           -->
 
-            <!-- CARD ITEM -->
-                    
+            <!-- CARD ITEM -->                    
+
         </div>
       </div>
     </div>

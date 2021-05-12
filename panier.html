@@ -15,6 +15,7 @@
     />
     <title>Votre panier</title>
   </head>
+
   <body>
     <!-- LOGO HEADER -->
     <header>
@@ -22,14 +23,48 @@
     </header>
     <!-- FIN HEADER -->
 
+    <h1 id="h1_center">Récapitulatif de votre panier</h1>
+
     <!-- CONTAINER CENTRAL -->
     <div id="container_central">
       <div class="glassmorphism container_img">
-        <a href="index.html" id="back_button_link"
-          ><i class="fas fa-chevron-circle-left"></i
-        ></a>
-      </div>
-    </div>
+        <a href="index.html" id="back_button_link"><i class="fas fa-chevron-circle-left"><span id="cont_btn">Continuer mes achats</span></i></a>
+
+        <div id="container_panier">
+          <div class="panier_grid">
+
+          
+              <div class="central_panier box_shadow grid_design" id="centralpanier">
+                             
+              </div>        
+
+              <div class="total_panier flex-center_grid box_shadow grid_design">
+   
+                <span class="totalprice_grid">
+                  <p>Produits</p>
+                  <p id="item_price">0 €</p>
+                </span>
+                <span class="totalprice_grid">
+                  <p>Livraison</p>
+                  <p>Offerte</p>
+                </span>
+           
+                <span class="totalprice_grid margin_total"><p>TOTAL</p><p id="price_total_panier">0 €</p></span><button id="send_command"><a href="confirmation.html">Valider ma commande</a></button></div>
+              <div class="bdr_panier flex-center_grid box_shadow grid_design"><form action="" method="get">
+                <label for=""></label>
+                <input type="text" id="reduc_panier" placeholder="Mon bon de réduction">
+                <button class="btn_bdr">Ajouter</button>
+                </form>
+              </div>
+              <div class="ask_panier flex-center_grid box_shadow grid_design">Une question ? Contactez nous par téléphone !</div>
+              <div class="ship_panier flex-center_grid box_shadow grid_design"><span>Livraison rapide garantie</span></div>
+            </div>
+
+        </div>          
+      </div> 
+    </div> 
+               
+
     <!--FIN CONTAINER CENTRAL-->
 
     <!-- FOOTER -->
@@ -42,6 +77,6 @@
     <!-- FIN DU FOOTER -->
 
     <!-- SCRIPTS JAVASCRIPT -->
-    <script src="index.js"></script>
+    <script src="panier.js"></script>
   </body>
 </html>
