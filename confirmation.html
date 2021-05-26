@@ -18,22 +18,36 @@
   <body>
     <!-- LOGO HEADER -->
     <header>
-      <a href="index.html"><img src="images/logo.png" class="img_header" /></a>
+      <a href="index.html" id="home"><img src="images/logo.png" class="img_header" alt="Logo du site de vente en ligne Orinoco"/></a>
     </header>
     <!-- FIN HEADER -->
 
     <!-- CONTAINER CENTRAL -->
-    <div id="container_central">
+    <div id="container_central" class="flex_center">
       <div class="glassmorphism container_img">
         <a href="index.html" id="back_button_link"
-          ><i class="fas fa-chevron-circle-left"></i
-        ></a>
+          ><i class="fas fa-chevron-circle-left"></i></a> 
+
+          <div class="thank_conf flex_column flex_center br_5 box_shadow">
+            <span class="bold_tit_conf">
+          Merci de votre commande sur notre site !
+            </span>
+
+            <div class="flex_column flex_center conf_recap">
+             <span>Numero de commande : <span id="command_id"><strong>0878742565</strong></span></span> 
+            <span>Montant : <span id="final_price_cart"><strong>58€</strong></span></span>
+          </div>           
+            
+          </div>
+
+        
+      </div>
       </div>
     </div>
     <!--FIN CONTAINER CENTRAL-->
 
     <!-- FOOTER -->
-    <footer>
+    <footer class="flex_center">
       <div>
         <span><i class="far fa-copyright"></i> Orinico 2021 </span>       
       </div>
