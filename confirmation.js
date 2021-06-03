@@ -1,8 +1,5 @@
 let pushProductInLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
-getPrice();
-clearLocalStorage ();
-
 function getPrice() {
 	// On calcul et affiche le montant du panier
 	let totalCardPrice = [];
@@ -20,8 +17,8 @@ function getPrice() {
 };
 
 function clearLocalStorage () {
-const clearLocal = document.getElementById('back_button_link');
-const alsoClearLocal = document.getElementById('home');
+	const clearLocal = document.getElementById('back_button_link');
+	const alsoClearLocal = document.getElementById('home');
 
 	clearLocal.addEventListener("click", function(){		
 		window.localStorage.clear();
@@ -32,8 +29,11 @@ const alsoClearLocal = document.getElementById('home');
 	})
 }
 
-// function commandId() {
+function commandId() {
+ 	let displayOrderId = JSON.parse(localStorage.getItem("formValue"));
+		document.getElementById("command_id").innerHTML = `<strong>${displayOrderId.orderId}</strong>`
+ };
 
-// 	document.getElementById("command_id").innerHTML = `<strong>${}</strong> `
-// };
-
+ getPrice();
+ clearLocalStorage ();
+ commandId();

@@ -23,7 +23,8 @@ fetch("http://localhost:3000/api/teddies")
 											bear._id
 										}">Voir le produit</a></span></div></div></div>`
 			)
-			.join();
+			.join(" ");
+			feedLocalStoragePost();
 	})
 	.catch((err) => console.log(err));
 
@@ -40,31 +41,66 @@ let pushProductInLocalStorage = JSON.parse(localStorage.getItem("produit"));
 const redbubble = document.getElementById("red_o");
 const itemInPostCard = document.getElementById("dd_cart_content");
 
-if (pushProductInLocalStorage === null) {
-	const emptyCard = `<div>Votre panier est vide</div>`;
-	itemInPostCard.innerHTML = emptyCard;
-} else {
+function feedLocalStoragePost() {
+	//Le local storage est vide !
+	//On injecte le code HTML
+	if (pushProductInLocalStorage === null) {
+		const emptyCard = ` <div id="empty_card">Votre panier est vide</div> `;
+		itemInPostCard.innerHTML = emptyCard;
+	}
+	// LE PANIER N'EST PAS VIDE ! On remplit le HTML !
+	else {
+		feedHtmlLocalPost();
+		deleteItemsPost();
+		localCheckPost();
+	}
+}
+
+function feedHtmlLocalPost() {
 	let cardItemPostInside = [];
 
+	// On recupere les informations ajoutées au LocalStorage et on remplit le HTML
 	for (k = 0; k < pushProductInLocalStorage.length; k++) {
 		cardItemPostInside =
 			cardItemPostInside +
 			`
-        <div class="row_item_card">
-        <img src="${pushProductInLocalStorage[k].imageUrl}" alt="La photo de ${pushProductInLocalStorage[k].name}" id="img_grid_panier">
-        <div class="item_name_grid">
-        ${pushProductInLocalStorage[k].name}
-          <span>
-            Couleur: <span>${pushProductInLocalStorage[k].colors}</span> 
-          </span>
-          <span>${pushProductInLocalStorage[k].price}, 00€</span>
-        </div>        
-        <span>${pushProductInLocalStorage[k].price}, 00€</span>
-        <i class="fas fa-trash-alt" id="trash_delete"></i>
-      </div> 
-     `;
-
-		redbubble.style.display = "block";
-		itemInPostCard.innerHTML = cardItemPostInside;
+		<div class="row_item_card" id="${pushProductInLocalStorage[k].id}">
+			<img src="${pushProductInLocalStorage[k].imageUrl}" alt="La photo de ${
+				pushProductInLocalStorage[k].name
+			}" id="img_grid_panier">
+			<div class="item_name_grid">
+				${pushProductInLocalStorage[k].name}				
+			</div>			
+			<span>${pushProductInLocalStorage[k].price + ",00 €"}</span>
+			<i class="fas fa-trash-alt trash_delete" data-id="${pushProductInLocalStorage[k].id}"></i>
+  		</div> 
+ 	`;
 	}
+	
+	redbubble.style.display = "block";
+	itemInPostCard.innerHTML = cardItemPostInside;
 }
+
+function deleteItemsPost() {
+	//On delete 1 item du panier
+	document
+		.querySelectorAll(".trash_delete").forEach(element => {		
+			element.addEventListener("click", function (event) {
+				let teddies = JSON.parse(window.localStorage.getItem("produit"));
+				let id = event.target.getAttribute("data-id");
+				var filtered = teddies.filter(function(value, index, arr){ 
+					return value.id != id;
+				});
+				window.localStorage.setItem("produit", JSON.stringify(filtered));	
+				let elt = document.getElementById(id).remove();
+				window.location.reload();
+			});	
+		});
+};
+
+function localCheckPost() {
+	if (pushProductInLocalStorage.length === 0) {
+		window.localStorage.clear();
+		window.location.reload();
+	}
+};

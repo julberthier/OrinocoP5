@@ -36,9 +36,9 @@ function displayBearsInfos(bear) {
 		"container_produit"
 	).innerHTML = `<a href="index.html" id="back_button_link"><i class="fas fa-chevron-circle-left"></i></a>
   
-  <img src="${bear.imageUrl}" alt="" id="img_produit" class="box_shadow"> 
+  	<img src="${bear.imageUrl}" alt="" id="img_produit" class="box_shadow"> 
   
-  <div id="background_card" class="box_shadow"> 
+  	<div id="background_card" class="box_shadow"> 
         <div class="list_items flex_column"> 
           <span class="price_list_items bold_items">${bear.name}</span> 
           <span id="desc_items">${bear.description}</span>
@@ -52,13 +52,13 @@ function displayBearsInfos(bear) {
 					)}</select>
         </div>  
   
-  <button id="shop_button" type="sumbit"> 
+  	<button id="shop_button" type="sumbit"> 
       <i class="fas fa-cart-plus"></i> Ajouter au panier 
-  </button> 
+ 	 </button> 
 
       </div> 
-  </div>
-  `;
+  	</div>
+  	`;
 };
 
 // On rajoute une virgule et le signe € pour tous les prix !
@@ -84,26 +84,6 @@ function openShopModal() {
 	document.getElementById("addedtocart").style.display = "block";
 	blurBg.style.display = "block";
 	blurBg.style.zIndex = "0";	
-};
-
-function addToCart(bear) {
-	// On crée un objet pour la recuperation des valeurs du formulaire pour envoi au panier
-	let productChoice = {
-		imageUrl: bear.imageUrl,
-		name: bear.name,
-		price: bear.price / 100,
-		id: urlSearchParams.get("id"),
-	};
-
-	// ON REMPLIT LA FENETRE PANIER
-	document.getElementById("main_box_fenetre").innerHTML = `
-            <img src="${bear.imageUrl}" alt="La photo de ${bear.name}" id="img_prod_wind">
-            <div><strong>${bear.name}</strong></div>
-            <div>COULEUR: <span><strong>couleur</strong></span></div>
-            <div>PRIX: <span><strong>${
-							bear.price / 100 + ",00€"
-						}</strong></span></div>          
-`;
 
 	const addedtocart = document.getElementById("addedtocart");
 
@@ -115,22 +95,45 @@ function addToCart(bear) {
 	// L'utilisateur continue les achats
 	document.querySelector("#button_keep").addEventListener("click", function () {
 		document.getElementById("addedtocart").style.display = "none";
+		blurBg.style.display = "none";
+		window.location = "index.html";
 	});
 
+	document.getElementById('button_cart').addEventListener("click", function() {
+		window.location = "panier.html";
+	})
+};
+
+function addToCart(bear) {
+	// On crée un objet pour la recuperation des valeurs du formulaire pour envoi au panier
+	let productChoice = {
+		imageUrl: bear.imageUrl,
+		name: bear.name,
+		price: bear.price / 100,
+		id: urlSearchParams.get("id")
+	};
+
+	// ON REMPLIT LA FENETRE PANIER
+	document.getElementById("main_box_fenetre").innerHTML = `
+            <img src="${bear.imageUrl}" alt="La photo de ${bear.name}" id="img_prod_wind">
+            <div><strong>${bear.name}</strong></div>
+            <div>COULEUR: <span><strong>couleur</strong></span></div>
+            <div>PRIX: <span><strong>${bear.price / 100 + ",00€"}</strong></span></div>          
+`;	
 	// LOCAL STORAGE
 	//JSON.parse converti les données qui sont dans le localStorage en object JS.
 	let pushProductInLocalStorage = JSON.parse(localStorage.getItem("produit"));
 
 	// AJOUTER UN PRODUIT AU LOCAL STORAGE
-	const addProductToLocalStorage = () => {
+function addProductToLocalStorage() {
 		pushProductInLocalStorage.push(productChoice);
-		localStorage.setItem("produit", JSON.stringify(pushProductInLocalStorage));
+		localStorage.setItem("produit", JSON.stringify(pushProductInLocalStorage));	
 	};
 
 	// 1+ Product
 	if (pushProductInLocalStorage) {
 		addProductToLocalStorage();
-		openShopModal();
+		openShopModal();		
 	}
 
 	// 0 product

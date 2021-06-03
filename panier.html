@@ -33,22 +33,19 @@
 		<!-- CONTAINER CENTRAL -->
 		<div id="container_central" class="flex_center">
 			<div class="glassmorphism container_img">
-				<a href="index.html" id="back_button_link"
-					><i class="fas fa-chevron-circle-left">
-						<span id="cont_btn">Continuer mes achats</span></i
-					></a
-				>
+				<a href="index.html" id="back_button_link">
+					<i class="fas fa-chevron-circle-left">
+					<span id="cont_btn">Continuer mes achats</span></i>
+				</a>
 
 				<div id="container_panier">
 					<div class="panier_grid">
 						<div
 							class="central_panier box_shadow grid_design br_5"
-							id="centralpanier"
-						></div>
+							id="centralpanier">
+						</div>
 
-						<div
-							class="total_panier flex-center_grid box_shadow grid_design br_5"
-						>
+						<div class="total_panier flex-center_grid box_shadow grid_design br_5">
 							<span class="totalprice_grid">
 								<span>Produits</span>
 								<span id="item_price">0€</span>
@@ -74,9 +71,7 @@
 							</span>
 						</div>
 
-						<div
-							class="bdr_panier flex-center_grid box_shadow grid_design br_5"
-						>
+						<div class="bdr_panier flex-center_grid box_shadow grid_design br_5">
 							<form action="" method="get">
 								<input
 									type="text"
@@ -87,18 +82,11 @@
 							</form>
 						</div>
 
-						<div
-							class="ask_panier flex-center_grid box_shadow grid_design br_5"
-						>
+						<div class="ask_panier flex-center_grid box_shadow grid_design br_5">
 							Une question ? Contactez nous par téléphone !
 						</div>
-						<div
-							class="ship_panier flex-center_grid box_shadow grid_design br_5"
-						>
-							<span
-								><i class="fas fa-shipping-fast"></i> Livraison rapide
-								garantie</span
-							>
+						<div class="ship_panier flex-center_grid box_shadow grid_design br_5">
+							<span><i class="fas fa-shipping-fast"></i> Livraison rapide garantie</span>
 						</div>
 					</div>
 				</div>
@@ -108,6 +96,8 @@
 				<button id="close" class="btn_close">
 					<i class="fas fa-times"></i>
 				</button>
+
+				<!-- FORMULAIRE DE CONFIRMATION DE COMMANDE -->
 
 				<form action="confirmation.html" class="form_design">
 					<div>
@@ -191,12 +181,14 @@
 				</form>
 			</div>
 
+			<!-- POP UP SI PANIER VIDE -->
+
 			<div class="box_shadow pop_empty br_5" id="empty_popup">
 				<i class="fas fa-shopping-cart empty_pop_cart"></i>
-				<span
-					>Votre panier est vide, vous devez le remplir afin de valider votre
-					commande.</span
-				>
+				<span>
+					Votre panier est vide, vous devez le remplir afin de valider votre
+					commande.
+				</span>
 			</div>
 
 			<div id="blur_bg"></div>

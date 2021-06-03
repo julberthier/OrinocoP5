@@ -18,6 +18,7 @@ function feedLocalStorage() {
 		deleteItems();
 		getPrice();
 		yourCardIsNotEmpty();
+		localCheck();
 		validationOk();
 	}
 }
@@ -30,7 +31,7 @@ function feedHtmlLocal() {
 		cardItemInside =
 			cardItemInside +
 			`
-		<div class="row_item_card">
+		<div class="row_item_card" id="${pushProductInLocalStorage[k].id}">
 			<img src="${pushProductInLocalStorage[k].imageUrl}" alt="La photo de ${
 				pushProductInLocalStorage[k].name
 			}" id="img_grid_panier">
@@ -40,21 +41,9 @@ function feedHtmlLocal() {
 					Couleur: <span>${pushProductInLocalStorage[k].colors}</span> 
 				</span>
 				<span>${pushProductInLocalStorage[k].price + ",00 €"}</span>
-			</div>
-			<select name="" id="item_selector_list">
-				<option value="1">1</option>
-				<option value="2">2</option>
-				<option value="3">3</option>
-				<option value="4">4</option>
-				<option value="5">5</option>
-				<option value="6">6</option>
-				<option value="7">7</option>
-				<option value="8">8</option>
-				<option value="9">9</option>
-				<option value="10">10</option>
-			</select>
+			</div>			
 			<span>${pushProductInLocalStorage[k].price + ",00 €"}</span>
-			<i class="fas fa-trash-alt" id="trash_delete"></i>
+			<i class="fas fa-trash-alt trash_delete" data-id="${pushProductInLocalStorage[k].id}"></i>
   		</div> 
  	`;
 	}
@@ -65,15 +54,35 @@ function feedHtmlLocal() {
 
 feedLocalStorage();
 
-//On efface un object du localStorage
+//On efface un objet du localStorage
+
 function deleteItems() {
 	//On delete 1 item du panier
 	document
-		.getElementById("trash_delete")
-		.addEventListener("click", function () {
-			window.localStorage.removeItem("produit");
-			window.location.reload();
+		.querySelectorAll(".trash_delete").forEach(element => {		
+			element.addEventListener("click", function (event) {
+				let teddies = JSON.parse(window.localStorage.getItem("produit"));
+				let id = event.target.getAttribute("data-id");
+				var filtered = teddies.filter(function(value, index, arr){ 
+					return value.id != id;
+				});
+				window.localStorage.setItem("produit", JSON.stringify(filtered));	
+				let elt = document.getElementById(id).remove();
+				window.location.reload();
+
+				let newTotalCardPrice = [];
+				for (let p = 0; p < filtered.length; p++) {
+				let newTotalPrice = filtered[p].price;
+				newTotalCardPrice.push(newTotalPrice);
+				}	
+
+				const priceCalc = (accumulator, currentValue) => accumulator + currentValue;
+				const newTotalCalc = newTotalCardPrice.reduce(priceCalc, 0);
+				document.getElementById("item_price").innerHTML = `${newTotalCalc + ",00 €"}`;
+				document.getElementById("price_total_panier").innerHTML = `${newTotalCalc + ",00 €"}`;				
+			});				
 		});
+
 
 	//On vide entierement le localStorage
 	document.querySelector("#delete_card").addEventListener("click", function () {
@@ -82,6 +91,16 @@ function deleteItems() {
 	});
 }
 
+function localCheck() {
+	if (pushProductInLocalStorage.length === 0) {
+		window.localStorage.clear();
+		window.location.reload();
+	}
+};
+
+// ON RECUPERER LES PRIX DES OURS POUR LES AFFICHER //
+
+
 function getPrice() {
 	// On calcul et affiche le montant du panier
 	let totalCardPrice = [];
@@ -89,23 +108,22 @@ function getPrice() {
 		let totalPrice = pushProductInLocalStorage[p].price;
 		totalCardPrice.push(totalPrice);
 	}
-
-	// On fait l'addition
-	const priceCalc = (accumulator, currentValue) => accumulator + currentValue;
-	const totalCalc = totalCardPrice.reduce(priceCalc, 0);
-
-	// Et on remplit avec le total calculé dynamiquement !
-	document.getElementById("item_price").innerHTML = `${totalCalc + ",00 €"}`;
-	document.getElementById("price_total_panier").innerHTML = `${
-		totalCalc + ",00 €"
-	}`;
+		// On fait l'addition
+		const priceCalc = (accumulator, currentValue) => accumulator + currentValue;
+		const totalCalc = totalCardPrice.reduce(priceCalc, 0);
+	
+		// Et on remplit avec le total calculé dynamiquement !
+		document.getElementById("item_price").innerHTML = `${totalCalc + ",00 €"}`;
+		document.getElementById("price_total_panier").innerHTML = `${totalCalc + ",00 €"}`;
 }
 
 const blurBg = document.getElementById("blur_bg");
 
+/* LE PANIER EST VIDE POP UP */
+
 function yourCardIsEmpty() {
 	const btnSend = document.querySelector("#send_command");
-	const popEmpty = document.querySelector(".pop_empty");
+	const popEmpty = document.getElementById("empty_popup");
 
 	btnSend.addEventListener("click", function (event) {
 		event.preventDefault();
@@ -114,12 +132,14 @@ function yourCardIsEmpty() {
 		blurBg.style.zIndex = "0";
 	});
 
-	btnSend.addEventListener("mouseout", function (event) {
+	popEmpty.addEventListener("mouseout", function (event) {
 		event.preventDefault();
 		popEmpty.style.visibility = "hidden";
 		blurBg.style.display = "none";
 	});
 }
+
+/* LE PANIER N'EST PAS VIDE, FORMULAIRE DE COMMANDE ! */
 
 const openHideBoxConf = document.getElementById("hide_conf_box");
 
@@ -139,16 +159,21 @@ document.getElementById("close").addEventListener("click", function () {
 	window.location.reload();
 });
 
+/* ENVOI DU FORMULAIRE DANS LE LOCALSTORAGE */
+
+let idOrderConf = Date.now()
+
 function validationOk() {
 	document
 		.getElementById("validateConf")
 		.addEventListener("click", function () {
 			const formValue = {
-				lastName: document.querySelector("#name").value,
-				firstName: document.querySelector("#firstname").value,
-				adress: document.querySelector("#adress").value,
-				city: document.querySelector("#city").value,
-				mail: document.querySelector("#mail").value,
+				orderId: idOrderConf,
+				lastName: document.getElementById("name").value,
+				firstName: document.getElementById("firstname").value,
+				adress: document.getElementById("adress").value,
+				city: document.getElementById("city").value,
+				mail: document.getElementById("mail").value,
 			};
 			localStorage.setItem("formValue", JSON.stringify(formValue));
 
@@ -161,8 +186,7 @@ function validationOk() {
 				method: "POST",
 				body: JSON.stringify(sendForShip),
 			})
-			.then(response => response.json())
-			.then(json => console.log(json));
-
+				.then((response) => response.json())
+				.then((json) => console.log(json));
 		});
 }

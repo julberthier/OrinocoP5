@@ -417,7 +417,7 @@
 	grid-area: ship_panier;
 }
 
-#trash_delete {
+.trash_delete {
 	cursor: pointer;
 }
 
@@ -586,9 +586,30 @@
 /* END CONFIRMATION */
 
 @media screen and (max-width: 1024px) {
+
+	.container_img {
+		margin-top: 35px;
+	}
+
+	#main_box_fenetre {
+		width: 90%;
+	}
+
+	#container_panier {
+		overflow: scroll;
+	}
+
+	#addedtocart {
+		width: 95%;
+		padding: 35px 0;
+	}
+	#added_tit {
+		font-size: 1.5rem;
+	}		
+
 	#h1_center {
 		font-size: 18px;
-	}
+	}	
 
 	.panier_grid {
 		height: 100%;
@@ -605,6 +626,26 @@
 			"ask_panier ask_panier"
 			"ask_panier ask_panier"
 			"ship_panier ship_panier";
+	}	
+
+	.row_item_card {
+		height: fit-content;
+		padding: 5px;
+	}
+
+	.item_name_grid {
+		width: 75px;
+		font-size: 0.9rem;
+		font-weight: 600;
+	}
+
+
+	.item_name_grid span {
+		font-size: 14px;
+	}
+
+	.total_panier {
+		padding: 8px;
 	}
 
 	.bdr_panier {
@@ -614,4 +655,35 @@
 	.ask_panier {
 		font-size: 12px;
 	}
+
+	.global_form_des {
+		height: 70%;
+		width: 95%;
+		padding: 25px 0;
+	}
+
+	.form_design {
+		margin-top: 45px;
+		width: 100%;
+		max-width: none;
+		height: 300px;
+		flex-flow: column;
+		align-items: center;
+	}
+
+	.form_design input {
+		margin-top: 45px;		
+	}
+
+	#empty_popup span {
+text-align: center;
+	}
 }
+
+@media screen and (max-width: 810px) {
+	#button_cart {
+		margin-top: 15px;
+	}
+
+}
+
