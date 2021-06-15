@@ -1,19 +1,16 @@
-let pushProductInLocalStorage = JSON.parse(localStorage.getItem("produit"));
+let bears = JSON.parse(localStorage.getItem("produit"));
+let commandId = JSON.parse(localStorage.getItem("command"));
+
+function getId() {
+	document.getElementById("command_id").innerHTML = `${commandId[0].orderId}`
+}
 
 function getPrice() {
-	// On calcul et affiche le montant du panier
-	let totalCardPrice = [];
-	for (let p = 0; p < pushProductInLocalStorage.length; p++) {
-		let totalPrice = pushProductInLocalStorage[p].price;
-		totalCardPrice.push(totalPrice);
-	}
-
-	// On fait l'addition
-	const priceCalc = (accumulator, currentValue) => accumulator + currentValue;
-	const totalCalc = totalCardPrice.reduce(priceCalc, 0);
-
-	// Et on remplit avec le total calculé dynamiquement !
-	document.getElementById("final_price_cart").innerHTML = `<strong>${totalCalc + ",00 €"}</strong>`;	
+	let totalCardPrice = 0;
+	for (let p = 0; p < bears.length; p++) {
+		totalCardPrice = totalCardPrice + bears[p].price * bears[p].quantity;
+	}	
+	document.getElementById("final_price_cart").innerHTML = `<strong> ${totalCardPrice + ",00 €"}</strong>`;	
 };
 
 function clearLocalStorage () {
@@ -29,11 +26,6 @@ function clearLocalStorage () {
 	})
 }
 
-function commandId() {
- 	let displayOrderId = JSON.parse(localStorage.getItem("formValue"));
-		document.getElementById("command_id").innerHTML = `<strong>${displayOrderId.orderId}</strong>`
- };
-
+ getId();
  getPrice();
- clearLocalStorage ();
- commandId();
+ clearLocalStorage();

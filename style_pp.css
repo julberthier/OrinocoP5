@@ -9,7 +9,6 @@
 	flex-direction: column;
 }
 
-
 /*PAGE ADDITIONNELLE CSS*/
 
 .fa-chevron-circle-left {
@@ -42,6 +41,10 @@
 	object-fit: cover;
 	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
+}
+
+.mt_3 {
+	margin-top: 3%;
 }
 
 .box_shadow {
@@ -418,33 +421,45 @@
 }
 
 .trash_delete {
+	margin: 0 5px;
+	font-size: 14px;
+}
+
+.trash_icons {
+	margin-left: 15px;
+	font-size: 16px;
+	color: rgb(143, 1, 1);
+	cursor: pointer;
+}
+
+.qtbtn_plus,
+.qtbtn_minus {
 	cursor: pointer;
 }
 
 .pop_empty {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
 	flex-direction: column;
 	height: 50%;
 	width: 50%;
 	background-color: white;
 	font-size: 20px;
-    z-index: 1;
+	z-index: 1;
 }
 
 .empty_pop_cart {
 	background-color: #001829;
 	font-size: 80px;
 	margin-bottom: 25px;
-	padding: 25px
+	padding: 25px;
 }
 
 #empty_popup {
-    visibility: hidden;
+	visibility: hidden;
 }
-
 
 /* FIN PANIER GRID */
 
@@ -483,15 +498,15 @@
 
 /* FORMULAIRE CONTACT */
 .global_form_des {
-    background-color: #f3e9f1;
-    padding: 25px;
-    height: 250px;
-    width: 70%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    flex-direction: column;
-    flex-wrap: wrap;
+	background-color: #f3e9f1;
+	padding: 25px;
+	height: 250px;
+	width: 70%;
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+	flex-direction: column;
+	flex-wrap: wrap;
 	visibility: hidden;
 	position: fixed;
 	z-index: 1;
@@ -504,63 +519,63 @@
 }
 
 .form_design {
-    font-size: 14px;
-    font-weight: 600;
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    max-width: 80%;
+	font-size: 14px;
+	font-weight: 600;
+	display: flex;
+	flex-flow: row wrap;
+	justify-content: center;
+	max-width: 80%;
 	margin-top: 15px;
 }
 
 .form_design input {
-    border: none;
-    border-bottom: 2px solid gray;
-    outline: none;
-    transition: 0.25s ease-in-out;
+	border: none;
+	border-bottom: 2px solid gray;
+	outline: none;
+	transition: 0.25s ease-in-out;
 }
 
 .green_input {
-    border-bottom: 2px solid green;
+	border-bottom: 2px solid green;
 }
 
 .form_design input:hover {
-    border-bottom: 2px solid #001829;
+	border-bottom: 2px solid #001829;
 }
 
 .mg10 {
-    color: #001829;
-    margin: 0 10px;
+	color: #001829;
+	margin: 0 10px;
 	background-color: #f3e9f1;
 }
 
 .mg10:focus {
-    font-weight: 700;
-    font-size: 14px;
-    border-bottom: 2px solid #001829;
+	font-weight: 700;
+	font-size: 14px;
+	border-bottom: 2px solid #001829;
 }
 
 .validate_btn {
-    padding: 10px;
-    cursor: pointer;
-    color: white;
-    background-color: #001829;
-    font-weight: 600;
-    font-size: 14px;
+	padding: 10px;
+	cursor: pointer;
+	color: white;
+	background-color: #001829;
+	font-weight: 600;
+	font-size: 14px;
 	margin-top: 5px;
 }
 
 .btn_translate:hover {
-    transform: translateY(-3px);
-    box-shadow: 7px 7px 9px 0px #656565;
+	transform: translateY(-3px);
+	box-shadow: 7px 7px 9px 0px #656565;
 }
 
 .submit_conf {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    box-sizing: border-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	box-sizing: border-box;
 	margin-top: 25px;
 }
 
@@ -574,9 +589,10 @@
 	height: 450px;
 }
 
-.bold_tit_conf{
+.bold_tit_conf {
 	font-size: 40px;
 	font-weight: 600;
+	text-align: center;
 }
 
 .conf_recap {
@@ -586,7 +602,6 @@
 /* END CONFIRMATION */
 
 @media screen and (max-width: 1024px) {
-
 	.container_img {
 		margin-top: 35px;
 	}
@@ -605,11 +620,11 @@
 	}
 	#added_tit {
 		font-size: 1.5rem;
-	}		
+	}
 
 	#h1_center {
 		font-size: 18px;
-	}	
+	}
 
 	.panier_grid {
 		height: 100%;
@@ -626,7 +641,7 @@
 			"ask_panier ask_panier"
 			"ask_panier ask_panier"
 			"ship_panier ship_panier";
-	}	
+	}
 
 	.row_item_card {
 		height: fit-content;
@@ -638,7 +653,6 @@
 		font-size: 0.9rem;
 		font-weight: 600;
 	}
-
 
 	.item_name_grid span {
 		font-size: 14px;
@@ -672,11 +686,11 @@
 	}
 
 	.form_design input {
-		margin-top: 45px;		
+		margin-top: 45px;
 	}
 
 	#empty_popup span {
-text-align: center;
+		text-align: center;
 	}
 }
 
@@ -684,6 +698,4 @@ text-align: center;
 	#button_cart {
 		margin-top: 15px;
 	}
-
 }
-

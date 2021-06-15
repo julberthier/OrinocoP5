@@ -6,7 +6,6 @@ fetch("http://localhost:3000/api/teddies")
 	.then((response) => response.json())
 	.then((bears) => {
 		showContainer.innerHTML = bears
-
 			.map(
 				(bear) =>
 					`<div class="container_card box_shadow margin_t"> 
@@ -35,16 +34,15 @@ function numberWithCommas(x) {
 
 // LOCAL STORAGE
 //JSON.parse converti les données qui sont dans le localStorage en object JS.
-let pushProductInLocalStorage = JSON.parse(localStorage.getItem("produit"));
+let bears = JSON.parse(localStorage.getItem("produit"));
 
-//On injecte le code HTML
 const redbubble = document.getElementById("red_o");
 const itemInPostCard = document.getElementById("dd_cart_content");
 
 function feedLocalStoragePost() {
 	//Le local storage est vide !
 	//On injecte le code HTML
-	if (pushProductInLocalStorage === null) {
+	if (bears === null) {
 		const emptyCard = ` <div id="empty_card">Votre panier est vide</div> `;
 		itemInPostCard.innerHTML = emptyCard;
 	}
@@ -52,7 +50,6 @@ function feedLocalStoragePost() {
 	else {
 		feedHtmlLocalPost();
 		deleteItemsPost();
-		localCheckPost();
 	}
 }
 
@@ -60,19 +57,19 @@ function feedHtmlLocalPost() {
 	let cardItemPostInside = [];
 
 	// On recupere les informations ajoutées au LocalStorage et on remplit le HTML
-	for (k = 0; k < pushProductInLocalStorage.length; k++) {
+	for (k = 0; k < bears.length; k++) {
 		cardItemPostInside =
 			cardItemPostInside +
 			`
-		<div class="row_item_card" id="${pushProductInLocalStorage[k].id}">
-			<img src="${pushProductInLocalStorage[k].imageUrl}" alt="La photo de ${
-				pushProductInLocalStorage[k].name
+		<div class="row_item_card" id="${bears[k].id}">
+			<img src="${bears[k].imageUrl}" alt="La photo de ${
+				bears[k].name
 			}" id="img_grid_panier">
 			<div class="item_name_grid">
-				${pushProductInLocalStorage[k].name}				
+				${bears[k].name}				
 			</div>			
-			<span>${pushProductInLocalStorage[k].price + ",00 €"}</span>
-			<i class="fas fa-trash-alt trash_delete" data-id="${pushProductInLocalStorage[k].id}"></i>
+			<span>${bears[k].price*bears[k].quantity + ",00 €"}</span>
+			<i class="fas fa-trash-alt trash_delete" data-id="${bears[k].id}"></i>
   		</div> 
  	`;
 	}
@@ -86,7 +83,7 @@ function deleteItemsPost() {
 	document
 		.querySelectorAll(".trash_delete").forEach(element => {		
 			element.addEventListener("click", function (event) {
-				let teddies = JSON.parse(window.localStorage.getItem("produit"));
+				let teddies = JSON.parse(localStorage.getItem("produit"));
 				let id = event.target.getAttribute("data-id");
 				var filtered = teddies.filter(function(value, index, arr){ 
 					return value.id != id;
@@ -96,11 +93,13 @@ function deleteItemsPost() {
 				window.location.reload();
 			});	
 		});
+	localCheckPost();
+
 };
 
 function localCheckPost() {
-	if (pushProductInLocalStorage.length === 0) {
+	let bears = JSON.parse(localStorage.getItem("produit"));
+	if (bears.length === 0) {
 		window.localStorage.clear();
-		window.location.reload();
 	}
 };

@@ -1,120 +1,146 @@
-// LOCAL STORAGE
-const itemInCard = document.getElementById("centralpanier");
-
 //JSON.parse converti les données qui sont dans le localStorage en objet JS.
-let pushProductInLocalStorage = JSON.parse(localStorage.getItem("produit"));
+let bears = JSON.parse(localStorage.getItem("produit"));
 
-function feedLocalStorage() {
+function feedLocalStorage(bears) {
 	//Le local storage est vide !
 	//On injecte le code HTML
-	if (pushProductInLocalStorage === null) {
-		const emptyCard = ` <div id="empty_card">Votre panier est vide</div> `;
-		itemInCard.innerHTML = emptyCard;
-		yourCardIsEmpty();
+	if (bears === null) {
+		document.getElementById("centralpanier").innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
+		yourCardIsEmpty(bears);
 	}
 	// LE PANIER N'EST PAS VIDE ! On remplit le HTML !
 	else {
-		feedHtmlLocal();
-		deleteItems();
-		getPrice();
+		feedHtmlLocal(bears);
+		quantity();
+		getPrice(bears);
 		yourCardIsNotEmpty();
-		localCheck();
+		deleteItems(bears);
 		validationOk();
 	}
 }
 
-function feedHtmlLocal() {
+feedLocalStorage(bears);
+
+function feedHtmlLocal(bears) {
 	let cardItemInside = [];
 
 	// On recupere les informations ajoutées au LocalStorage et on remplit le HTML
-	for (k = 0; k < pushProductInLocalStorage.length; k++) {
+	for (k = 0; k < bears.length; k++) {
 		cardItemInside =
 			cardItemInside +
 			`
-		<div class="row_item_card" id="${pushProductInLocalStorage[k].id}">
-			<img src="${pushProductInLocalStorage[k].imageUrl}" alt="La photo de ${
-				pushProductInLocalStorage[k].name
+		<div class="row_item_card" id="${bears[k].id}">
+			<img src="${bears[k].imageUrl}" alt="La photo de ${
+				bears[k].name
 			}" id="img_grid_panier">
 			<div class="item_name_grid">
-				${pushProductInLocalStorage[k].name}
+				${bears[k].name}
 				<span>
-					Couleur: <span>${pushProductInLocalStorage[k].colors}</span> 
+					Couleur: <span>${bears[k].colors}</span> 
 				</span>
-				<span>${pushProductInLocalStorage[k].price + ",00 €"}</span>
+				<span>${bears[k].price + ",00 €"}</span>
+			</div>	
+			<div class="qt_div">quantité :<span class="quantity">${bears[k].quantity}</span>		
+			</div>
+			<span class="item_price_qt">${
+				bears[k].price * bears[k].quantity + ",00 €"
+			}</span>
+			<div class="shop_increase_">
+			<span class="plusminus"><i class="fas fa-plus qtbtn_plus" data-id="${bears[k].id}"></i> 
+			<i class="fas fa-shopping-bag trash_delete"></i>
+			<i class="fas fa-minus qtbtn_minus" data-id="${bears[k].id}"></i>
+			</span>			
+			<i class="fas fa-trash trash_icons" data-id="${bears[k].id}"></i>
 			</div>			
-			<span>${pushProductInLocalStorage[k].price + ",00 €"}</span>
-			<i class="fas fa-trash-alt trash_delete" data-id="${pushProductInLocalStorage[k].id}"></i>
   		</div> 
  	`;
 	}
-
 	//On affiche l'objet !
-	itemInCard.innerHTML = cardItemInside;
+	document.getElementById("centralpanier").innerHTML = cardItemInside;
 }
 
-feedLocalStorage();
-
-//On efface un objet du localStorage
-
-function deleteItems() {
-	//On delete 1 item du panier
-	document
-		.querySelectorAll(".trash_delete").forEach(element => {		
-			element.addEventListener("click", function (event) {
-				let teddies = JSON.parse(window.localStorage.getItem("produit"));
-				let id = event.target.getAttribute("data-id");
-				var filtered = teddies.filter(function(value, index, arr){ 
-					return value.id != id;
-				});
-				window.localStorage.setItem("produit", JSON.stringify(filtered));	
-				let elt = document.getElementById(id).remove();
-				window.location.reload();
-
-				let newTotalCardPrice = [];
-				for (let p = 0; p < filtered.length; p++) {
-				let newTotalPrice = filtered[p].price;
-				newTotalCardPrice.push(newTotalPrice);
-				}	
-
-				const priceCalc = (accumulator, currentValue) => accumulator + currentValue;
-				const newTotalCalc = newTotalCardPrice.reduce(priceCalc, 0);
-				document.getElementById("item_price").innerHTML = `${newTotalCalc + ",00 €"}`;
-				document.getElementById("price_total_panier").innerHTML = `${newTotalCalc + ",00 €"}`;				
-			});				
+// ON GERE LA QUANTITE
+function quantity() {
+	document.querySelectorAll(".qtbtn_plus").forEach((element) => {
+		element.addEventListener("click", function (event) {
+			let bears = JSON.parse(localStorage.getItem("produit"));
+			let id = event.target.getAttribute("data-id");
+			let filtered = bears.find((teddies) => teddies.id === id);
+			filtered.quantity = isNaN(filtered.quantity) ? 0 : filtered.quantity;
+			filtered.quantity++;
+			localStorage.produit = JSON.stringify(bears);
+			let totalPrice = filtered.price * filtered.quantity;
+			let div = document.getElementById(id);
+			div.querySelector(".quantity").innerHTML = filtered.quantity;
+			div.querySelector(".item_price_qt").innerHTML = totalPrice + ",00 €";
+			getPrice(bears);
 		});
+	});
 
-
-	//On vide entierement le localStorage
-	document.querySelector("#delete_card").addEventListener("click", function () {
-		window.localStorage.clear();
-		window.location.reload();
+	document.querySelectorAll(".qtbtn_minus").forEach((element) => {
+		element.addEventListener("click", function (event) {
+			let bears = JSON.parse(localStorage.getItem("produit"));
+			let id = event.target.getAttribute("data-id");
+			let filtered = bears.find((teddies) => teddies.id === id);
+			if (filtered.quantity < 2) {
+				return;
+			}
+			filtered.quantity--;
+			localStorage.produit = JSON.stringify(bears);
+			let totalPrice = filtered.price * filtered.quantity;
+			let div = document.getElementById(id);
+			div.querySelector(".quantity").innerHTML = filtered.quantity;
+			div.querySelector(".item_price_qt").innerHTML = totalPrice + ",00 €";
+			getPrice(bears);
+		});
 	});
 }
 
-function localCheck() {
-	if (pushProductInLocalStorage.length === 0) {
-		window.localStorage.clear();
-		window.location.reload();
-	}
+// ON SUPPRIME UN OBJET DU PANIER
+
+function deleteItems() {
+	document.querySelectorAll(".trash_icons").forEach((element) => {
+		element.addEventListener("click", function (event) {
+			let bears = JSON.parse(localStorage.getItem("produit"));
+			let id = event.target.getAttribute("data-id");
+			var filter = bears.filter(function (value, index, arr) {
+				return value.id != id;
+			});
+			localStorage.setItem("produit", JSON.stringify(filter));
+			let elt = document.getElementById(id).remove();
+			location = location;
+		});		
+	});
+
+		//On vide entierement le localStorage
+	document.querySelector("#delete_card").addEventListener("click", function () {
+			window.localStorage.clear();
+	});
+	localCheck();
 };
+
+function localCheck() {
+	if (bears.length === 0) {
+		window.localStorage.clear();
+		document.getElementById("centralpanier").innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
+	}
+}
 
 // ON RECUPERER LES PRIX DES OURS POUR LES AFFICHER //
 
-
-function getPrice() {
+function getPrice(bears) {
 	// On calcul et affiche le montant du panier
-	let totalCardPrice = [];
-	for (let p = 0; p < pushProductInLocalStorage.length; p++) {
-		let totalPrice = pushProductInLocalStorage[p].price;
-		totalCardPrice.push(totalPrice);
+	let totalCardPrice = 0;
+	for (let p = 0; p < bears.length; p++) {
+		totalCardPrice = totalCardPrice + bears[p].price * bears[p].quantity;
 	}
-		// On fait l'addition
-		const priceCalc = (accumulator, currentValue) => accumulator + currentValue;
-		const totalCalc = totalCardPrice.reduce(priceCalc, 0);
-	
-		// Et on remplit avec le total calculé dynamiquement !
-		document.getElementById("item_price").innerHTML = `${totalCalc + ",00 €"}`;
-		document.getElementById("price_total_panier").innerHTML = `${totalCalc + ",00 €"}`;
+	// Et on remplit avec le total calculé dynamiquement !
+	document.getElementById("item_price").innerHTML = `${
+		totalCardPrice + ",00 €"
+	}`;
+	document.getElementById("price_total_panier").innerHTML = `${
+		totalCardPrice + ",00 €"
+	}`;
 }
 
 const blurBg = document.getElementById("blur_bg");
@@ -161,32 +187,39 @@ document.getElementById("close").addEventListener("click", function () {
 
 /* ENVOI DU FORMULAIRE DANS LE LOCALSTORAGE */
 
-let idOrderConf = Date.now()
-
 function validationOk() {
 	document
 		.getElementById("validateConf")
 		.addEventListener("click", function () {
-			const formValue = {
-				orderId: idOrderConf,
+			let bears = JSON.parse(localStorage.getItem("produit"));
+
+			let contact = {
 				lastName: document.getElementById("name").value,
 				firstName: document.getElementById("firstname").value,
-				adress: document.getElementById("adress").value,
+				address: document.getElementById("adress").value,
 				city: document.getElementById("city").value,
-				mail: document.getElementById("mail").value,
+				email: document.getElementById("mail").value,
 			};
-			localStorage.setItem("formValue", JSON.stringify(formValue));
 
 			const sendForShip = {
-				formValue,
-				pushProductInLocalStorage,
+				contact: contact,
+				products: bears.map((el) => {
+					return el.id;
+				}),
 			};
 
 			fetch("http://localhost:3000/api/teddies/order", {
 				method: "POST",
+				headers: { 
+					"Accept": "application/json", 
+					"Content-type": "application/json" 
+				},
 				body: JSON.stringify(sendForShip),
 			})
-				.then((response) => response.json())
-				.then((json) => console.log(json));
+			.then((response) => response.json())
+			.then((json) => {
+			localStorage.setItem("command", JSON.stringify([json]))
+			});
+			location.href = "confirmation.html"
 		});
 }

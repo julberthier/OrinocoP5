@@ -27,16 +27,12 @@ fetch(`http://localhost:3000/api/teddies/${idProductSelector}`)
 
 function displayBearsInfos(bear) {
 	// On recupere le titre de la page pour le changer de maniere dynamique
-	document.querySelector(
-		"#product_page_title"
-	).innerHTML = `La tannière de ${bear.name}`;
+	document.getElementById("product_page_title").innerHTML = `La tannière de ${bear.name}`;
 
 	// HTML à injecter dans le code
-	document.getElementById(
-		"container_produit"
-	).innerHTML = `<a href="index.html" id="back_button_link"><i class="fas fa-chevron-circle-left"></i></a>
+	document.getElementById("container_produit").innerHTML = `<a href="index.html" id="back_button_link"><i class="fas fa-chevron-circle-left"></i></a>
   
-  	<img src="${bear.imageUrl}" alt="" id="img_produit" class="box_shadow"> 
+  	<img src="${bear.imageUrl}" alt="La petite photo de ${bear.name}" id="img_produit" class="box_shadow"> 
   
   	<div id="background_card" class="box_shadow"> 
         <div class="list_items flex_column"> 
@@ -59,12 +55,12 @@ function displayBearsInfos(bear) {
       </div> 
   	</div>
   	`;
-};
+}
 
 // On rajoute une virgule et le signe € pour tous les prix !
 function numberWithCommas(x) {
 	return x.toString().replace(/\B(?=(\d{2})+(?!\d))/g, ",") + " €";
-};
+}
 
 // On récupere toutes les données des couleurs
 function colorChoicePeaker(colors) {
@@ -73,9 +69,9 @@ function colorChoicePeaker(colors) {
 		colorItems.push(
 			`<option style="background-color:${element}; value="${element}">${element}</span>`
 		);
-	});	
+	});
 	return colorItems.join(" ");
-};
+}
 
 const blurBg = document.getElementById("blur_bg");
 
@@ -83,7 +79,7 @@ const blurBg = document.getElementById("blur_bg");
 function openShopModal() {
 	document.getElementById("addedtocart").style.display = "block";
 	blurBg.style.display = "block";
-	blurBg.style.zIndex = "0";	
+	blurBg.style.zIndex = "0";
 
 	const addedtocart = document.getElementById("addedtocart");
 
@@ -99,47 +95,51 @@ function openShopModal() {
 		window.location = "index.html";
 	});
 
-	document.getElementById('button_cart').addEventListener("click", function() {
+	document.getElementById("button_cart").addEventListener("click", function () {
 		window.location = "panier.html";
-	})
-};
+	});
+}
 
 function addToCart(bear) {
 	// On crée un objet pour la recuperation des valeurs du formulaire pour envoi au panier
 	let productChoice = {
 		imageUrl: bear.imageUrl,
 		name: bear.name,
+		color: bear.color,
 		price: bear.price / 100,
-		id: urlSearchParams.get("id")
+		id: urlSearchParams.get("id"),
+		quantity: 1,
 	};
 
 	// ON REMPLIT LA FENETRE PANIER
 	document.getElementById("main_box_fenetre").innerHTML = `
-            <img src="${bear.imageUrl}" alt="La photo de ${bear.name}" id="img_prod_wind">
+            <img src="${bear.imageUrl}" alt="La photo de ${
+		bear.name
+	}" id="img_prod_wind">
             <div><strong>${bear.name}</strong></div>
             <div>COULEUR: <span><strong>couleur</strong></span></div>
-            <div>PRIX: <span><strong>${bear.price / 100 + ",00€"}</strong></span></div>          
-`;	
-	// LOCAL STORAGE
+            <div>PRIX: <span><strong>${
+							bear.price / 100 + ",00€"
+						}</strong></span></div>          
+`;
+	addProductToLocalStorage(productChoice);
+	openShopModal();
+}
+
+// AJOUTER UN PRODUIT AU LOCAL STORAGE
+function addProductToLocalStorage(bear) {
 	//JSON.parse converti les données qui sont dans le localStorage en object JS.
-	let pushProductInLocalStorage = JSON.parse(localStorage.getItem("produit"));
-
-	// AJOUTER UN PRODUIT AU LOCAL STORAGE
-function addProductToLocalStorage() {
-		pushProductInLocalStorage.push(productChoice);
-		localStorage.setItem("produit", JSON.stringify(pushProductInLocalStorage));	
-	};
-
-	// 1+ Product
-	if (pushProductInLocalStorage) {
-		addProductToLocalStorage();
-		openShopModal();		
+	let bears = JSON.parse(localStorage.getItem("produit"));
+	if (bears === null) {
+		localStorage.setItem("produit", JSON.stringify([bear]));
+		return;
 	}
-
-	// 0 product
-	else {
-		pushProductInLocalStorage = [];
-		addProductToLocalStorage();
-		openShopModal();
+	let index = bears.findIndex((el) => el.id === bear.id);
+	if (index >= 0) {
+		let current = bears[index];
+		current.quantity++;
+	} else {
+		bears.push(bear);
 	}
-};
+	localStorage.setItem("produit", JSON.stringify(bears));
+}
