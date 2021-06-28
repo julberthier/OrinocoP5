@@ -40,7 +40,7 @@ function feedHtmlLocal(bears) {
 				</span>
 				<span>${bears[k].price + ",00 €"}</span>
 			</div>	
-			<div class="qt_div">quantité :<span class="quantity">${bears[k].quantity}</span>		
+			<div class="qt_div">quantité : <span class="quantity">${bears[k].quantity}</span>		
 			</div>
 			<span class="item_price_qt">${
 				bears[k].price * bears[k].quantity + ",00 €"
@@ -115,16 +115,9 @@ function deleteItems() {
 		//On vide entierement le localStorage
 	document.querySelector("#delete_card").addEventListener("click", function () {
 			window.localStorage.clear();
-	});
-	localCheck();
+			location = location;
+});
 };
-
-function localCheck() {
-	if (bears.length === 0) {
-		window.localStorage.clear();
-		document.getElementById("centralpanier").innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
-	}
-}
 
 // ON RECUPERER LES PRIX DES OURS POUR LES AFFICHER //
 

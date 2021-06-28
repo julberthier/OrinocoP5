@@ -6,7 +6,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="style_pp.css" />
-		<link rel="icon" type="image" href="images/favicon.ico" />
+		<link rel="icon" href="images/favicon.ico" />
 
 		<!-- FONT AWESOME -->
 
@@ -72,15 +72,14 @@
 							</span>
 						</div>
 
-						<div class="bdr_panier flex-center_grid box_shadow grid_design br_5">
-							<form action="" method="get">
+						<div class="bdr_panier flex-center box_shadow grid_design br_5">
 								<input
 									type="text"
 									id="reduc_panier"
 									placeholder="Mon bon de réduction"
 								/>
+								<label for="reduc_panier" hidden>bon de reduction</label>
 								<button class="btn_bdr">Ajouter</button>
-							</form>
 						</div>
 
 						<div class="ask_panier flex-center_grid box_shadow grid_design br_5">
@@ -96,6 +95,7 @@
 			<div class="global_form_des br_5 box_shadow" id="hide_conf_box">
 				<button id="close" class="btn_close">
 					<i class="fas fa-times"></i>
+					<span hidden>bouton de fermeture</span>
 				</button>
 
 				<!-- FORMULAIRE DE CONFIRMATION DE COMMANDE -->
@@ -112,6 +112,7 @@
 							required
 							minlength="2"
 						/>
+						<label for="name" hidden>Nom de famille</label>
 						<span></span>
 					</div>
 
@@ -126,6 +127,7 @@
 							required
 							minlength="2"
 						/>
+						<label for="firstname" hidden>Prenom</label>
 						<span></span>
 					</div>
 
@@ -140,6 +142,7 @@
 							required
 							minlength="6"
 						/>
+						<label for="adress" hidden>Adresse</label>
 						<span></span>
 					</div>
 
@@ -153,6 +156,7 @@
 							placeholder="Ville"
 							required
 						/>
+						<label for="city" hidden>Ville</label>
 						<span></span>
 					</div>
 
@@ -168,6 +172,7 @@
 							minlength="6"
 							maxlength="64"
 						/>
+						<label for="mail" hidden>Adresse email</label>
 						<span></span>
 					</div>
 
