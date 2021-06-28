@@ -5,7 +5,9 @@ function feedLocalStorage(bears) {
 	//Le local storage est vide !
 	//On injecte le code HTML
 	if (bears === null) {
-		document.getElementById("centralpanier").innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
+		document.getElementById(
+			"centralpanier"
+		).innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
 		yourCardIsEmpty(bears);
 	}
 	// LE PANIER N'EST PAS VIDE ! On remplit le HTML !
@@ -40,13 +42,17 @@ function feedHtmlLocal(bears) {
 				</span>
 				<span>${bears[k].price + ",00 €"}</span>
 			</div>	
-			<div class="qt_div">quantité : <span class="quantity">${bears[k].quantity}</span>		
+			<div class="qt_div">quantité : <span class="quantity">${
+				bears[k].quantity
+			}</span>		
 			</div>
 			<span class="item_price_qt">${
 				bears[k].price * bears[k].quantity + ",00 €"
 			}</span>
 			<div class="shop_increase_">
-			<span class="plusminus"><i class="fas fa-plus qtbtn_plus" data-id="${bears[k].id}"></i> 
+			<span class="plusminus"><i class="fas fa-plus qtbtn_plus" data-id="${
+				bears[k].id
+			}"></i> 
 			<i class="fas fa-shopping-bag trash_delete"></i>
 			<i class="fas fa-minus qtbtn_minus" data-id="${bears[k].id}"></i>
 			</span>			
@@ -108,24 +114,25 @@ function deleteItems() {
 			});
 			localStorage.setItem("produit", JSON.stringify(filter));
 			let elt = document.getElementById(id).remove();
-			location = location;			
-		});		
-	});
-		//On vide entierement le localStorage
-	document.querySelector("#delete_card").addEventListener("click", function () {
-			window.localStorage.clear();
 			location = location;
-});
-localCheck()
-};
+		});
+	});
+	//On vide entierement le localStorage
+	document.querySelector("#delete_card").addEventListener("click", function () {
+		window.localStorage.clear();
+		location = location;
+	});
+	localCheck();
+}
 
 function localCheck() {
 	if (bears.length === 0) {
 		window.localStorage.clear();
-		document.getElementById("centralpanier").innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
+		document.getElementById(
+			"centralpanier"
+		).innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
 	}
-};
-
+}
 
 // ON RECUPERER LES PRIX DES OURS POUR LES AFFICHER //
 
@@ -211,16 +218,16 @@ function validationOk() {
 
 			fetch("http://localhost:3000/api/teddies/order", {
 				method: "POST",
-				headers: { 
-					"Accept": "application/json", 
-					"Content-type": "application/json" 
+				headers: {
+					Accept: "application/json",
+					"Content-type": "application/json",
 				},
 				body: JSON.stringify(sendForShip),
 			})
-			.then((response) => response.json())
-			.then((json) => {
-			localStorage.setItem("command", JSON.stringify([json]))
-			});
-			location.href = "confirmation.html"
+				.then((response) => response.json())
+				.then((json) => {
+					localStorage.setItem("command", JSON.stringify([json]));
+				});
+			location.href = "confirmation.html";
 		});
 }
