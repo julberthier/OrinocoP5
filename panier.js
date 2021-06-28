@@ -108,16 +108,24 @@ function deleteItems() {
 			});
 			localStorage.setItem("produit", JSON.stringify(filter));
 			let elt = document.getElementById(id).remove();
-			location = location;
+			location = location;			
 		});		
 	});
-
 		//On vide entierement le localStorage
 	document.querySelector("#delete_card").addEventListener("click", function () {
 			window.localStorage.clear();
 			location = location;
 });
+localCheck()
 };
+
+function localCheck() {
+	if (bears.length === 0) {
+		window.localStorage.clear();
+		document.getElementById("centralpanier").innerHTML = ` <div id="empty_card">Votre panier est vide</div> `;
+	}
+};
+
 
 // ON RECUPERER LES PRIX DES OURS POUR LES AFFICHER //
 
