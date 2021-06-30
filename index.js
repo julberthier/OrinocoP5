@@ -33,6 +33,7 @@ function numberWithCommas(x) {
 }
 
 // LOCAL STORAGE
+
 //JSON.parse converti les données qui sont dans le localStorage en object JS.
 let bears = JSON.parse(localStorage.getItem("produit"));
 
@@ -101,5 +102,6 @@ function localCheckPost() {
 	let bears = JSON.parse(localStorage.getItem("produit"));
 	if (bears.length === 0) {
 		window.localStorage.clear();
+		location = location;
 	}
 };
