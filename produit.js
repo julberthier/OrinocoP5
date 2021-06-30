@@ -1,10 +1,6 @@
 // CONST AND VAR
 const showContainerProduit = document.getElementById("container_produit");
 
-////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////////////////
-
 //API REQUEST
 //On extrait l'ID de l'url !
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -30,7 +26,8 @@ function displayBearsInfos(bear) {
 	document.getElementById("product_page_title").innerHTML = `La tannière de ${bear.name}`;
 
 	// HTML à injecter dans le code
-	document.getElementById("container_produit").innerHTML = `<a href="index.html" id="back_button_link"><i class="fas fa-chevron-circle-left"></i><span hidden>Bouton de retour</span></a>
+	document.getElementById("container_produit").innerHTML = `<a href="index.html" id="back_button_link"><i class="fas fa-chevron-circle-left"></i>
+	<span hidden>Bouton de retour</span></a>
   
   	<img src="${bear.imageUrl}" alt="La petite photo de ${bear.name}" id="img_produit" class="box_shadow"> 
   

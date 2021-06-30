@@ -95,7 +95,6 @@ function deleteItemsPost() {
 			});	
 		});
 	localCheckPost();
-
 };
 
 function localCheckPost() {
