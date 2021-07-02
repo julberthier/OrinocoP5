@@ -1,5 +1,7 @@
 //JSON.parse converti les données qui sont dans le localStorage en objet JS.
 let bears = JSON.parse(localStorage.getItem("produit"));
+const validationFormulaire =  document.getElementById("validateConf");
+let form_OK = true;
 
 function feedLocalStorage(bears) {
 	//Le local storage est vide !
@@ -36,10 +38,7 @@ function feedHtmlLocal(bears) {
 				bears[k].name
 			}" id="img_grid_panier">
 			<div class="item_name_grid">
-				${bears[k].name}
-				<span>
-					Couleur: <span>${bears[k].colors}</span> 
-				</span>
+				${bears[k].name}			
 				<span>${bears[k].price + ",00 €"}</span>
 			</div>	
 			<div class="qt_div">quantité : <span class="quantity">${
@@ -50,11 +49,10 @@ function feedHtmlLocal(bears) {
 				bears[k].price * bears[k].quantity + ",00 €"
 			}</span>
 			<div class="shop_increase_">
-			<span class="plusminus"><i class="fas fa-plus qtbtn_plus" data-id="${
-				bears[k].id
-			}"></i> 
-			<i class="fas fa-shopping-bag trash_delete"></i>
+			<span class="plusminus">
 			<i class="fas fa-minus qtbtn_minus" data-id="${bears[k].id}"></i>
+			<i class="fas fa-shopping-bag trash_delete"></i>
+			<i class="fas fa-plus qtbtn_plus" data-id="${bears[k].id}"></i> 			
 			</span>			
 			<i class="fas fa-trash trash_icons" data-id="${bears[k].id}"></i>
 			</div>			
@@ -194,40 +192,73 @@ document.getElementById("close").addEventListener("click", function () {
 });
 
 /* ENVOI DU FORMULAIRE DANS LE LOCALSTORAGE */
-
-function validationOk() {
-	document
-		.getElementById("validateConf")
-		.addEventListener("click", function () {
+function validationOk() {	
 			let bears = JSON.parse(localStorage.getItem("produit"));
+			
+	validationFormulaire.addEventListener("click", function() {
+			let emailRegExp = new RegExp('^[a-zA-Z0-9.-_]+[@]{1}[a-zA-Z0-9.-_]+[.]{1}[a-z]{2,10}$', 'g');
+			let cityRegExp = new RegExp('^[a-zA-Z-_ ]+$');
+				
+			if (!emailRegExp.test(document.getElementById("mail").value)){
+				form_OK = false,
+				alert('Veuillez renseigner une adresse email valide ! ')
+			}
+			
+			if (document.getElementById("name").value.length < 2) {	
+				form_OK = false,
+				alert('Le nom est trop court ! ')
+			}
 
-			let contact = {
-				lastName: document.getElementById("name").value,
-				firstName: document.getElementById("firstname").value,
-				address: document.getElementById("adress").value,
-				city: document.getElementById("city").value,
-				email: document.getElementById("mail").value,
-			};
+			if (document.getElementById("firstname").value.length < 2) {
+				form_OK = false,	
+				alert('Le prénom est trop court ! ')
+			}
+			
+			if (document.getElementById("adress").value.length < 4) {		
+				form_OK = false,
+				alert('Veuillez renseigner une adresse valide ! ')
+			}
 
-			const sendForShip = {
-				contact: contact,
-				products: bears.map((el) => {
-					return el.id;
-				}),
-			};
+			if (!cityRegExp.test(document.getElementById("city").value)) {
+				form_OK = false,	
+				alert('Les chiffres ne sont pas acceptés')
+			}
 
-			fetch("http://localhost:3000/api/teddies/order", {
-				method: "POST",
-				headers: {
-					Accept: "application/json",
-					"Content-type": "application/json",
-				},
-				body: JSON.stringify(sendForShip),
-			})
-				.then((response) => response.json())
-				.then((json) => {
-					localStorage.setItem("command", JSON.stringify([json])),
-					location.href = "confirmation.html";
-				});
-		});
+			if (form_OK === false) {
+				alert('Tous les champs du formulaire doivent être remplis.')
+			}
+			
+			if (form_OK) {	
+				let contact = {
+					lastName: document.getElementById("name").value,
+					firstName: document.getElementById("firstname").value,
+					address: document.getElementById("adress").value,
+					city: document.getElementById("city").value,
+					email: document.getElementById("mail").value,
+				};
+	
+				const sendForShip = {
+					contact: contact,
+					products: bears.map((el) => {
+						return el.id;
+					}),
+				};
+					fetch("http://localhost:3000/api/teddies/order", {
+						method: "POST",
+						headers: {
+							Accept: "application/json",
+							"Content-type": "application/json",
+						},
+						body: JSON.stringify(sendForShip),
+					})
+						.then((response) => response.json())
+						.then((json) => {					
+							localStorage.setItem("command", JSON.stringify([json])),
+							location.href = "/Frontend/pages/confirmation.html"
+					});
+			}
+	})
 }
+
+
+
