@@ -225,7 +225,8 @@ function validationOk() {
 			}
 
 			if (form_OK === false) {
-				alert('Tous les champs du formulaire doivent être remplis.')
+				alert('Tous les champs du formulaire doivent être remplis.'),
+				location = location
 			}
 			
 			if (form_OK) {	
@@ -254,7 +255,7 @@ function validationOk() {
 						.then((response) => response.json())
 						.then((json) => {					
 							localStorage.setItem("command", JSON.stringify([json])),
-							location.href = "/Frontend/pages/confirmation.html"
+							location.href = "/frontend/pages/confirmation.html"
 					});
 			}
 	})
