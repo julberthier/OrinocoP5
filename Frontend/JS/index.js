@@ -14,7 +14,7 @@ fetch("http://localhost:3000/api/teddies")
                   <div class="list_items flex_column"> 
                     <h2 class="price_list_items bold_items">${bear.name}</h2> 
                     <span><span class="price_list_items italic_items"><i class="fas fa-tags"></i> ${numberWithCommas(bear.price)} </span></span>
-                    <span class="price_list_items price_items"><a href="Frontend/pages/produit.html?id=${bear._id}">Voir le produit</a></span></div></div></div>`)
+                    <span class="price_list_items price_items"><a href="Frontend/pages/produit.html?id=${bear._id}">Voir ce produit</a></span></div></div></div>`)
 			.join(" ");
 			feedLocalStoragePost();
 	})
