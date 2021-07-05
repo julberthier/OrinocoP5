@@ -80,11 +80,10 @@ function openShopModal() {
 	document.querySelector("#button_keep").addEventListener("click", function () {
 		document.getElementById("addedtocart").style.display = "none";
 		blurBg.style.display = "none";
-		window.location = "/Frontend/index.html";
 	});
 
 	document.getElementById("button_cart").addEventListener("click", function () {
-		window.location = "/Frontend/pages/panier.html";
+		window.location = "../pages/panier.html";
 	});
 }
 
